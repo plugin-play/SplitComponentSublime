@@ -12,10 +12,9 @@
 		{
 			"command": "split_components_something",
 			"caption": "SplitComponents: Do Something"
-			},
-			]
-		}
-
+		},
 		]
 	}
 	]
+}
+]
