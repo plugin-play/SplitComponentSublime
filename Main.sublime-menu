@@ -1,20 +1,20 @@
 [
-{
-	"caption": "Tools",
-	"mnemonic": "T",
-	"id": "tools",
-	"children":
-	[
 	{
-		"caption": "SplitComponents",
+		"caption": "Tools",
+		"mnemonic": "T",
+		"id": "tools",
 		"children":
 		[
 		{
-			"command": "split_components_something",
-			"caption": "SplitComponents: Do Something"
-		},
+			"caption": "SplitComponents",
+			"children":
+			[
+			{
+				"command": "split_components_something",
+				"caption": "SplitComponents: Do Something"
+			},
+			]
+		}
 		]
 	}
-	]
-}
 ]
