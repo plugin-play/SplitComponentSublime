@@ -119,14 +119,20 @@ class SplitComponents(sublime_plugin.EventListener):
 							file.close()
 
 							# debugs
-							print('arquivo js')
-							print(self.file_content['js'])
-							print()
-							print('arquivo template')
-							print(self.file_content['template'])
-							print()
-							print('arquivo css')
-							print(self.file_content['css'])
+							# print('arquivo js')
+							# print(self.file_content['js'])
+							# print()
+							# print('arquivo template')
+							# print(self.file_content['template'])
+							# print()
+							# print('arquivo css')
+							# print(self.file_content['css'])
+
+							for linha in self.file_content['js']:
+								#debug
+								#Aqui poderia escrever no arquivo na aba de JS
+								#ver no console
+								print(linha)
 
 							# Fechar o arquivo atual
 
