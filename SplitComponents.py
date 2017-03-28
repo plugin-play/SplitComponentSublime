@@ -3,10 +3,10 @@ import sublime_plugin
 
 class SplitComponents(sublime_plugin.EventListener):
 
-	# type files ###Extension 'md' is used for test
-	extensions = ['vue', 'ng', 'md']
+	# type of known files
+	extensions = ['vue', 'ng']
 	# extens? usada nos arquivos abertos nas abas, quando houver o split
-	group_extension = '.sc'
+	group_extension = 'sc'
 	# original layout
 	original_layout = sublime.active_window().get_layout()
 
@@ -118,6 +118,7 @@ class SplitComponents(sublime_plugin.EventListener):
 
 							file.close()
 
+							# debugs
 							print('arquivo js')
 							print(self.file_content['js'])
 							print()
