@@ -17,7 +17,7 @@ class SplitComponents(sublime_plugin.EventListener):
 	layout = {"cols": [0.0, 0.5, 1.0],"rows": [0.0, 0.6, 1.0],"cells": [[0, 0, 2, 1], [0, 1, 1, 2], [1, 1, 2, 2]]}
 
 	# conteúdo do arquivo .vue ou .ng
-	file_content = {'js':[], 'html':[], 'css':[]}
+	file_content = {'js':[], 'template':[], 'css':[]}
 
 	# show console message
 	print("............::::::::| SplitComponents | Started |::::::::............")
@@ -79,44 +79,53 @@ class SplitComponents(sublime_plugin.EventListener):
 							content = file.readlines()
 
 							js = None
-							html = None
+							template = None
 							css = None
 							# print(content)
 
-							# Identificar as partes no arquivo html, css e js
+							# Identificar as partes no arquivo template, css e js
 							for linha in content:
 
 								# @TODO ajustar essas flags para um modelo mais moderno, ficou muito extenso
 								#  Flags para ajudar na separacao do arquivo
-								if linha.find('<html>') >= 0 :
-									html =  True
+								if linha.find('<template>') >= 0 :
+									template =  True
 
-								if linha.find('</html>') >= 0 :
-									html =  False
+								if linha.find('</template>') >= 0 :
+									template =  False
 
 								if linha.find('<style>') >= 0:
 									css = True
 
-								if linha.find('/<style>') >= 0:
+								if linha.find('</style>') >= 0:
 									css = False
 
 								if linha.find('<script>') >= 0:
 									js = True
 
-								if linha.find('/<script>') >= 0:
+								if linha.find('</script>') >= 0:
 									js = False
 
 								# Salva as linhas separadamente
 								if True == js:
 									self.file_content['js'].append(linha)
 
-								if True == html:
-									self.file_content['html'].append(linha)
+								if True == template:
+									self.file_content['template'].append(linha)
 
 								if True == css:
 									self.file_content['css'].append(linha)
 
 							file.close()
+
+							print('arquivo js')
+							print(self.file_content['js'])
+							print()
+							print('arquivo template')
+							print(self.file_content['template'])
+							print()
+							print('arquivo css')
+							print(self.file_content['css'])
 
 							# Fechar o arquivo atual
 

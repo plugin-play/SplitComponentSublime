@@ -7,11 +7,11 @@ A Plugin Sublime Text
 	$(3);
 </script>
 
-<html>
+<template>
 	<h1>1</h1>
 	<h1>2</h1>
 	<h1>3</h1>
-</html>
+</template>
 
 <style>
 	border: 1px red solid;
