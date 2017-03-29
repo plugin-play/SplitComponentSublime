@@ -1,5 +1,6 @@
 import sublime
 import sublime_plugin
+from .util import parser
 
 class SplitComponents(sublime_plugin.EventListener):
 
@@ -14,13 +15,17 @@ class SplitComponents(sublime_plugin.EventListener):
 	original_file = {'name':'', 'ext':''}
 
 	# SplitComponents layout
-	layout = {"cols": [0.0, 0.5, 1.0],"rows": [0.0, 0.6, 1.0],"cells": [[0, 0, 2, 1], [0, 1, 1, 2], [1, 1, 2, 2]]}
+	layout = {
+		"cols": [0.0, 0.5, 1.0],
+		"rows": [0.0, 0.6, 1.0],
+		"cells": [[0, 0, 2, 1], [0, 1, 1, 2], [1, 1, 2, 2]]
+	}
 
 	# conteúdo do arquivo .vue ou .ng
 	file_content = {'js':[], 'template':[], 'css':[]}
 
 	# show console message
-	print("............::::::::| SplitComponents | Started |::::::::............")
+	# print("............::::::::| SplitComponents | Started |::::::::............")
 
 	# listeners of user actions
 	def on_activated_async(self, view):
@@ -37,7 +42,7 @@ class SplitComponents(sublime_plugin.EventListener):
 
 	# controller
 	def handle(self):
-		print("debug handle")
+		#print("debug handle")
 
 		# flag to indicate known extension
 		known_extension = False
@@ -58,7 +63,6 @@ class SplitComponents(sublime_plugin.EventListener):
 				# verify available extensions
 				for extension in self.extensions:
 					# print(sublime.active_window().get_layout())
-
 					try:
 						#verify if is a known type file
 						if extension == sublime.active_window().extract_variables()['file_extension'] and self.layout != sublime.active_window().get_layout():
@@ -76,45 +80,11 @@ class SplitComponents(sublime_plugin.EventListener):
 
 							# Ler o arquivo atual e salvar em uma variavel
 							file = open(sublime.active_window().extract_variables()['file'], 'r')
-							content = file.readlines()
+							content = file.read()
 
-							js = None
-							template = None
-							css = None
-							# print(content)
+							parts = parser(content)
 
-							# Identificar as partes no arquivo template, css e js
-							for linha in content:
-
-								# @TODO ajustar essas flags para um modelo mais moderno, ficou muito extenso
-								#  Flags para ajudar na separacao do arquivo
-								if linha.find('<template>') >= 0 :
-									template =  True
-
-								if linha.find('</template>') >= 0 :
-									template =  False
-
-								if linha.find('<style>') >= 0:
-									css = True
-
-								if linha.find('</style>') >= 0:
-									css = False
-
-								if linha.find('<script>') >= 0:
-									js = True
-
-								if linha.find('</script>') >= 0:
-									js = False
-
-								# Salva as linhas separadamente
-								if True == js:
-									self.file_content['js'].append(linha)
-
-								if True == template:
-									self.file_content['template'].append(linha)
-
-								if True == css:
-									self.file_content['css'].append(linha)
+							print(parts)
 
 							file.close()
 
@@ -128,11 +98,11 @@ class SplitComponents(sublime_plugin.EventListener):
 							# print('arquivo css')
 							# print(self.file_content['css'])
 
-							for linha in self.file_content['js']:
+							#for linha in self.file_content['js']:
 								#debug
 								#Aqui poderia escrever no arquivo na aba de JS
 								#ver no console
-								print(linha)
+								# print(linha)
 
 							# Fechar o arquivo atual
 
@@ -149,7 +119,7 @@ class SplitComponents(sublime_plugin.EventListener):
 
 					except KeyError as error:
 						print(error)
-						print("Error to change layout")
+						#print("Error to change layout")
 
 			# if isn't a known extension and split layout is set, back to original layout
 			if False == known_extension and self.layout == sublime.active_window().get_layout():
@@ -158,5 +128,5 @@ class SplitComponents(sublime_plugin.EventListener):
 
 		except KeyError as error:
 			print(error)
-			print("Error to recognize file extension")
+			#print("Error to recognize file extension")
 
